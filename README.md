@@ -1,1 +1,1 @@
-Records Navigator user locations and timestamps.
+Records Navigator user locations with timestamps.
