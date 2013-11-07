@@ -13,10 +13,10 @@ setup(
     description='Server component for recording Navigator activity.',
     long_description=open('README.md').read(),
     install_requires=[
-        "Flask >= 0.10.1",
-        "requests >= 2.0.1",
-        "jsonschema >= 2.2.0",
-        "strict-rfc3339 >= 0.4",
-        "pytz >= 2013.7",
+        "Flask",
+        "requests",
+        "jsonschema",
+        "strict-rfc3339",
+        "pytz",
     ],
 )
