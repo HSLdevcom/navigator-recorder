@@ -1,14 +1,12 @@
 from distutils.core import setup
 
 setup(
-    name='NavigatorRecorderServer',
+    name='navigator-recorder',
     version='0.1.0',
     author='haphut',
     author_email='haphut@gmail.com',
     packages=['navirec'],
-    #packages=['navirec', 'navirec.test'],
-    #scripts=['bin/stowe-towels.py','bin/wash-towels.py'],
-    #url='http://pypi.python.org/pypi/TowelStuff/',
+    url='https://github.com/HSLdevcom/navigator-recorder/',
     license='LICENSE.txt',
     description='Server component for recording Navigator activity.',
     long_description=open('README.md').read(),
