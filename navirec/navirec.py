@@ -16,8 +16,10 @@ from strict_rfc3339 import validate_rfc3339
 import traceback
 
 
+
 app = Flask(__name__)
 app.config.from_envvar('FLASK_SETTINGS_FILE')
+
 
 
 DEBUG = True
@@ -25,9 +27,6 @@ SQL_SCHEMA_FILES = './sql/*.sql'
 JSON_SCHEMA_FILE = 'jsonschema.json'
 EARLIEST_DATETIME = datetime(2013, 11, 7, 0, 0, 0, 0, utc)
 ACCEPTABLE_FUTURE_TIMEDELTA = timedelta(days=1)
-# FIXME: Not currently needed.
-OUR_URL = 'http://localhost:9001'
-PERSONA_URL = 'https://verifier.login.persona.org/verify'
 
 
 
@@ -53,10 +52,8 @@ def close_connection(exception):
     if db is not None:
         db.close()
 
-## For dict output.
-#db.row_factory = sqlite3.Row
-
 # For CLI usage.
+# FIXME: Unused at the moment.
 def init_db():
     with app.app_context():
         db = get_db()
@@ -83,10 +80,6 @@ def write_db(query, args=()):
     db = get_db()
     cur = db.execute(query, args)
     db.commit()
-
-## Example
-#for user in query_db('select * from users'):
-#    print user['username'], 'has the id', user['user_id']
 
 
 
@@ -136,14 +129,6 @@ def crossdomain(origin=None, methods=None, headers=None,
         f.provide_automatic_options = False
         return update_wrapper(wrapped_function, f)
     return decorator
-
-
-
-#@app.route("/hello")
-## FIXME: Remove crossdomain later, use reverse proxy
-#@crossdomain(origin='*')
-#def hello():
-#    return "Hello World!"
 
 @app.errorhandler(404)
 def not_found(error):
@@ -221,8 +206,6 @@ def validate_session_id(session_id):
         raise ValueError('session_id was not found.')
     return session_id
 
-
-
 # FIXME: Remove crossdomain later, use reverse proxy
 @app.route('/auth/login', methods=['GET'])
 @crossdomain(origin='*')
@@ -239,47 +222,6 @@ def login():
 @crossdomain(origin='*')
 def logout():
     return make_response(jsonify({'sessionId': ''}), 200)
-
-## FIXME: Fill
-#def log_user_in_db(email): pass
-#
-### FIXME: Remove crossdomain later, use reverse proxy
-#@crossdomain(origin='*')
-#@app.route('/auth/login', methods=['POST'])
-#def login():
-#    # The request has to have an assertion for us to verify
-#    if 'assertion' not in request.form:
-#        abort(400)
-#
-#    # FIXME: url to config
-#    # Send the assertion to Mozilla's verifier service.
-#    data = {'assertion': request.form['assertion'], 'audience': OUR_URL}
-#    resp = post('https://verifier.login.persona.org/verify', data=data, verify=True)
-#
-#    # Did the verifier respond?
-#    if resp.ok:
-#        # Parse the response
-#        verification_data = loads(resp.content)
-#
-#        # Check if the assertion was valid
-#        print verification_data
-#        if verification_data['status'] == 'okay':
-#            print 'status == okay'
-#            # Log the user in by setting a secure session cookie
-#            email = verification_data['email']
-#            log_user_in_db(email)
-#            session.update({'email': email})
-#            return jsonify({"status": "OK"}), 200
-#
-#    # Oops, something failed. Abort.
-#    abort(500)
-#
-#@app.route('/auth/logout', methods=['POST'])
-#def logout():
-#    # FIXME: "Logout is simple: you just need to remove the user's session cookie."
-#    session.pop('email', None)
-#    session.modified = True
-#    return 'You are logged out'
 
 
 
