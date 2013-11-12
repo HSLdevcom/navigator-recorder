@@ -13,8 +13,14 @@ sqlite3 -init <(cat navirec/sql/*) /path/to/traces.db .quit
 4. Create a new secret key with for example
 ```python
 >>> import os
->>> os.urandom(24)
-'\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8'
+>>> os.urandom(64)
+'u\xc0$\xd3\xa6\xdfH\xef\x1as\t\xfd2\xcc\xfda\x15\x95}\rg/<\x11\xc8^\x95\x16?\x8c\x86I\xe7n\x00\xd3\xefY\x96\xe0\xdfjk\xc2\xed\t\xc94e\xd3>S\\a\x11\x87\xa4cu\xba\xff\xd5\x15\xf9'
+```
+or
+```python
+>>> with open('/dev/random', 'rb') as f:
+...     f.read(64)
+'u\xc0$\xd3\xa6\xdfH\xef\x1as\t\xfd2\xcc\xfda\x15\x95}\rg/<\x11\xc8^\x95\x16?\x8c\x86I\xe7n\x00\xd3\xefY\x96\xe0\xdfjk\xc2\xed\t\xc94e\xd3>S\\a\x11\x87\xa4cu\xba\xff\xd5\x15\xf9'
 ```
 5. Create a `production_settings.conf` file in the style of `navirec/debug_settings.conf` and change the values to match the choices in steps 3 and 4. Remember to set `DEBUG = False` for production deployment. Also protect the secret key and the privacy of your users by controlling access to `production_settings.conf` and the database.
 6. Create a script to use your newly-created `production_settings.conf` in the style of `navirec/debug_run.sh`.
