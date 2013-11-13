@@ -134,6 +134,10 @@ def crossdomain(origin=None, methods=None, headers=None,
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
+@app.route("/")
+def hello():
+    return "Hello World!"
+
 
 
 # Time functionality.
