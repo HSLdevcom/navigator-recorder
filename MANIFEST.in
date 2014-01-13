@@ -1,4 +1,8 @@
 include README.md
 include LICENSE.txt
+include requirements.txt
 include navirec/jsonschema.json
+include navirec/debug_settings.conf
+include navirec/create_db
+include navirec/run_debug
 include navirec/sql/*
