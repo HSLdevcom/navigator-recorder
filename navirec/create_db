@@ -1,0 +1,15 @@
+#!/bin/sh
+# Create a database for user traces.
+
+usage() {
+	echo `basename $0`: ERROR: $* 1>&2
+	echo usage: `basename $0` 'DATABASE_PATH' 1>&2
+	exit 1
+}
+
+[ $# -ne 1 ] && usage "Wrong number of arguments"
+
+for schema_file in navirec/sql/*.sql; do
+	echo "Processing ${schema_file}" 1>&2
+	(cat "${schema_file}" && echo .quit) | sqlite3 "$1"
+done
